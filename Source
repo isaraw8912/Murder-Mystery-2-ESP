@@ -1,0 +1,150 @@
+-- Made by Ubicast, Aleksandar#2880.
+-- You must wait for your character to load in before you execute.
+-- You also need to wait for the game to start in order the players to recieve their tools so that the script can identify them.
+
+local player = game.Players.LocalPlayer
+local character = workspace[player.Name]
+local mouse = player:GetMouse()
+local key = "r"
+local prefix = "/e "
+local prefix_length = 10
+local key_length = 7
+local msg_length
+
+local tracer_sheriff = Instance.new("Beam", workspace)
+tracer_sheriff.Name = "SheriffBeam"
+local tracer_murderer = Instance.new("Beam", workspace)
+tracer_murderer.Name = "MurdererBeam"
+local SheriffAttachment = Instance.new("Attachment", character.HumanoidRootPart)
+SheriffAttachment.Name = "SheriffAttachment"
+local MurdererAttachment = Instance.new("Attachment", character.HumanoidRootPart)
+MurdererAttachment.Name = "MurdererAttachment"
+
+function Prints()
+    print("")
+    print("Murder Mystery 2 ESP Successfully loaded!")
+    print("Murder Myster 2 ESP made by Ubicast.")
+    print("")
+    print('The prefix for commands is "'..prefix..'".')
+    print('The key to toggle ESP on/off is "'..key..'".')
+    print("")
+end
+
+player.Chatted:Connect(function(msg)
+	if msg:sub(1, key_length) == prefix.."key " then
+		if string.len(msg:sub(key_length + 1)) ~= 1 then
+			print("Please input only 1 character!")
+		else
+			msg_length = string.len(msg)
+			key = string.lower(msg:sub(msg_length))
+			print('The new key is "'..key..'".')
+		end 
+	elseif msg:sub(1, prefix_length) == prefix.."prefix " then
+		if msg:sub(prefix_length) == " " or msg:sub(prefix_length) == "" then
+			print("Please input an actual prefix!")
+		else
+			prefix = msg:sub(prefix_length + 1)
+			prefix_length = string.len(prefix.."prefix ")
+			key_length = prefix_length - 3
+			print('The new prefix is "'..prefix..'".')
+		end
+	end    
+end)
+
+mouse.KeyDown:Connect(function(keyreq)
+    keyreq = keyreq:lower()
+    if keyreq == key then
+        for _, v in pairs(game:GetService("Players"):GetPlayers()) do
+            if player.Name ~= v.Name then
+                if v.Backpack:FindFirstChild("Knife") or workspace[v.Name]:FindFirstChild("Knife") then
+                    print(v.Name.." is the murderer.")
+                    if workspace[v.Name].Head:FindFirstChild("MurdererIndicator") and workspace[v.Name].HumanoidRootPart:FindFirstChild("MurdererIndicatorBox") and workspace[v.Name].HumanoidRootPart:FindFirstChild("Attachment") then 
+                        workspace[v.Name].Head.MurdererIndicator:Destroy()
+                        workspace[v.Name].HumanoidRootPart.MurdererIndicatorBox:Destroy()
+                        workspace[v.Name].HumanoidRootPart.Attachment:Destroy()
+                        workspace.MurdererBeam.Attachment0 = nil
+                    else
+                        local a1 = Instance.new("Attachment", workspace[v.Name].HumanoidRootPart)
+                        tracer_murderer.Attachment0 = a1
+                        tracer_murderer.Attachment1 = character.HumanoidRootPart:FindFirstChild("MurdererAttachment")
+                        tracer_murderer.Width0 = 0.1
+                        tracer_murderer.Width1 = 0.1
+                        tracer_murderer.FaceCamera = true
+                        tracer_murderer.Color = ColorSequence.new(Color3.fromRGB(255, 0, 0), Color3.fromRGB(255, 0, 0))
+                        local BHA = Instance.new("BoxHandleAdornment", workspace[v.Name].HumanoidRootPart)
+                        BHA.Adornee = workspace[v.Name].HumanoidRootPart
+                        BHA.Color3 = Color3.new(255, 0, 0)
+                        BHA.Transparency = 0.6
+                        BHA.AlwaysOnTop = true
+                        BHA.Size = workspace[v.Name].HumanoidRootPart.Size
+                        BHA.Name = "MurdererIndicatorBox"
+                        BHA.ZIndex = 2
+                        local BillboardGui = Instance.new("BillboardGui", workspace[v.Name].Head)
+                        BillboardGui.StudsOffset = Vector3.new(0, 1.5, 0)
+                        BillboardGui.Name = "MurdererIndicator"
+                        BillboardGui.AlwaysOnTop = true
+                        BillboardGui.Size = UDim2.new(0, 100, 0, 50)
+                        local Title = Instance.new("TextLabel", workspace[v.Name].Head.MurdererIndicator)
+                        Title.Text = "Murderer"
+                        Title.Size =  UDim2.new(0, 100, 0, 50)
+                        Title.TextSize = 25
+                        Title.TextColor3 = Color3.fromRGB(255, 0, 0)
+                        Title.TextStrokeTransparency = 0.5
+                        Title.BackgroundTransparency = 1
+                        workspace[v.Name]:WaitForChild("Humanoid", math.huge).Died:Connect(function()
+                            workspace[v.Name].Head.MurdererIndicator:Destroy()
+                            workspace[v.Name].HumanoidRootPart.MurdererIndicatorBox:Destroy()
+                            workspace[v.Name].HumanoidRootPart.Attachment:Destroy()
+                            workspace.MurdererBeam.Attachment0 = nil
+                        end)
+                    end
+                elseif v.Backpack:FindFirstChild("Gun") or workspace[v.Name]:FindFirstChild("Gun") then
+                    print(v.Name.." is the sheriff.")
+                    if workspace[v.Name].Head:FindFirstChild("SheriffIndicator") and workspace[v.Name].HumanoidRootPart:FindFirstChild("SheriffIndicatorBox") and workspace[v.Name].HumanoidRootPart:FindFirstChild("Attachment") then 
+                        workspace[v.Name].Head.SheriffIndicator:Destroy()
+                        workspace[v.Name].HumanoidRootPart.SheriffIndicatorBox:Destroy()
+                        workspace[v.Name].HumanoidRootPart.Attachment:Destroy()
+                        workspace.SheriffBeam.Attachment0 = nil
+                    else
+                        local a1 = Instance.new("Attachment", workspace[v.Name].HumanoidRootPart)
+                        tracer_sheriff.Attachment0 = a1
+                        tracer_sheriff.Attachment1 = character.HumanoidRootPart:FindFirstChild("MurdererAttachment")
+                        tracer_sheriff.Width0 = 0.1
+                        tracer_sheriff.Width1 = 0.1
+                        tracer_sheriff.FaceCamera = true
+                        tracer_sheriff.Color = ColorSequence.new(Color3.fromRGB(0, 0, 255), Color3.fromRGB(0, 0, 255))
+                        local BHA = Instance.new("BoxHandleAdornment", workspace[v.Name].HumanoidRootPart)
+                        BHA.Adornee = workspace[v.Name].HumanoidRootPart
+                        BHA.Color3 = Color3.new(0, 0, 255)
+                        BHA.Transparency = 0.6
+                        BHA.AlwaysOnTop = true
+                        BHA.Size = workspace[v.Name].HumanoidRootPart.Size
+                        BHA.Name = "SheriffIndicatorBox"
+                        BHA.ZIndex = 2
+                        local BillboardGui = Instance.new("BillboardGui", workspace[v.Name].Head)
+                        BillboardGui.StudsOffset = Vector3.new(0, 1.5, 0)
+                        BillboardGui.Name = "SheriffIndicator"
+                        BillboardGui.AlwaysOnTop = true
+                        BillboardGui.Size = UDim2.new(0, 100, 0, 50)
+                        local Title = Instance.new("TextLabel", workspace[v.Name].Head.SheriffIndicator)
+                        Title.Text = "Sheriff"
+                        Title.Size =  UDim2.new(0, 100, 0, 50)
+                        Title.TextSize = 25
+                        Title.TextColor3 = Color3.fromRGB(0, 0, 255)
+                        Title.TextStrokeTransparency = 0.5
+                        Title.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+                        Title.BackgroundTransparency = 1
+                        workspace[v.Name]:WaitForChild("Humanoid", math.huge).Died:Connect(function()
+                            workspace[v.Name].Head.SheriffIndicator:Destroy()
+                            workspace[v.Name].HumanoidRootPart.SheriffIndicatorBox:Destroy()
+                            workspace[v.Name].HumanoidRootPart.Attachment:Destroy()
+                            workspace.SheriffBeam.Attachment0 = nil
+                        end)
+                    end
+                end 
+            end
+        end 
+    end
+end)
+
+Prints()
