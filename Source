@@ -1,6 +1,44 @@
--- Made by Ubicast, Aleksandar#2880.
--- You must wait for your character to load in before you execute.
--- You also need to wait for the game to start in order the players to recieve their tools so that the script can identify them.
+--[[
+
+
+
+		██╗░░░██╗██████╗░██╗░█████╗░░█████╗░░██████╗████████╗
+		██║░░░██║██╔══██╗██║██╔══██╗██╔══██╗██╔════╝╚══██╔══╝
+		██║░░░██║██████╦╝██║██║░░╚═╝███████║╚█████╗░░░░██║░░░
+		██║░░░██║██╔══██╗██║██║░░██╗██╔══██║░╚═══██╗░░░██║░░░
+		╚██████╔╝██████╦╝██║╚█████╔╝██║░░██║██████╔╝░░░██║░░░
+		░╚═════╝░╚═════╝░╚═╝░╚════╝░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░
+
+
+-- \\ ^ Developer Notes ^ // --
+
+- Default hotkey to toggle is "e".
+- Default prefix for a command is "!".
+- PLEASE FREQUENTLY CHECK DEVELOPER CONSOLE AFTER RUNNING A COMMAND!!! (To open Developer Console press "F9".)
+
++ How to use commands :
+
+	-:-Prefix-:-
+
+		~ How to change Prefix :
+		  - Write in chat *prefix*prefix *chosen prefix*.
+		  (example : !prefix /e) - Changes prefix to "/e".
+		  
+	-:-HotKey-:-
+	
+		~ How to change HotKey :
+		  - Write in chat *prefix*key *chosen key*.
+		  (example : /e key y) - Changes key to "y".
+
+~ Murder Mystery ESP was made by Ubicast, report bugs / glitches on my discord Aleksandar#2880.
+
+ [!] Please only edit below if you understand advanced Lua scripting.
+
+ [!] You must wait for your character to load in before you execute.
+ 
+ [!] You also need to wait for the game to start in order the players to recieve their tools so that the script can identify them.
+ 
+]]
 
 local player = game.Players.LocalPlayer
 local character = workspace[player.Name]
