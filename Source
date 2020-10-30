@@ -40,6 +40,8 @@
  
 ]]
 
+-- //'Variables'\\ --
+
 local player = game.Players.LocalPlayer
 local character = workspace[player.Name]
 local mouse = player:GetMouse()
@@ -58,6 +60,8 @@ SheriffAttachment.Name = "SheriffAttachment"
 local MurdererAttachment = Instance.new("Attachment", character.HumanoidRootPart)
 MurdererAttachment.Name = "MurdererAttachment"
 
+-- //'Function'\\ --
+
 function Prints()
     print("")
     print("Murder Mystery 2 ESP Successfully loaded!")
@@ -67,6 +71,8 @@ function Prints()
     print('The key to toggle ESP on/off is "'..key..'".')
     print("")
 end
+
+-- //'Command'\\ --
 
 player.Chatted:Connect(function(msg)
 	if msg:sub(1, key_length) == prefix.."key " then
@@ -88,6 +94,8 @@ player.Chatted:Connect(function(msg)
 		end
 	end    
 end)
+
+-- //'ESP'\\ --
 
 mouse.KeyDown:Connect(function(keyreq)
     keyreq = keyreq:lower()
@@ -184,5 +192,7 @@ mouse.KeyDown:Connect(function(keyreq)
         end 
     end
 end)
+
+-- //'Prints upon loading'\\ --
 
 Prints()
